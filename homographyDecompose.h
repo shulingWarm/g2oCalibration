@@ -47,11 +47,11 @@ void decomposeHomography(
     optimizer.initializeOptimization();
     //开始优化
     optimizer.optimize(iterateTime);
-    //释放所有的边的内存
-    for(auto eachPtr : edgePtrList)
-    {
-        delete eachPtr;
-    }
+    //释放所有的边的内存 优化器会自己负责释放的，不用释放
+//    for(auto eachPtr : edgePtrList)
+//    {
+//        delete eachPtr;
+//    }
     //记录内参结果
     dstIntrInfo=intrVertex->estimate();
     //记录外参的结果
@@ -61,8 +61,8 @@ void decomposeHomography(
         extrinsicVec.push_back(getExtrinsic(
                                    homographyVec[idHomo],dstIntrInfo));
     }
-    //释放内参节点
-    delete intrVertex;
+    //释放内参节点 不需要释放，优化器会自己负责释放
+    //delete intrVertex;
 }
 
 

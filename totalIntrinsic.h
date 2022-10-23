@@ -1,5 +1,5 @@
-#ifndef _EXTERNAL_VERTEX_H_
-#define _EXTERNAL_VERTEX_H_
+#ifndef _TOTAL_INTRINSIC_H_
+#define _TOTAL_INTRINSIC_H_
 #include<iostream>
 #include<g2o/core/base_vertex.h>
 #include <g2o/core/base_unary_edge.h>
@@ -13,8 +13,8 @@
 #include<vector>
 #include"types.h"
 
-//外参节点
-class ExternalVertex : public g2o::BaseVertex<6,EigenVec6d>
+//带有完整参数的内参模型
+class TotalIntrinsic : public g2o::BaseVertex<5,EigenVec5d>
 {
 public:
     //给变量设置的初值
@@ -22,14 +22,14 @@ public:
     virtual void setToOriginImpl()
     {
         //设置待估计的变量
-        _estimate<<100,100,100,0,0,0;
+        _estimate<<10,10,10,10,10;
     }
 
     //待优化变量的更新函数，这个选项在ceres那边是似乎是没有的
     virtual void oplusImpl(const double* update)
     {
         //把准备用来更新的变量增加到默认的变量上面
-        _estimate+=EigenVec6d(update);
+        _estimate+=EigenVec5d(update);
     }
 
     //关于存盘和读盘的函数,因为这两个函数实际上是不会被用到的，所以在这里不写实现
